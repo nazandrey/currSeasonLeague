@@ -23,6 +23,7 @@ namespace prevVsCurrSeason
         public MainWindow()
         {
             InitializeComponent();
+            Console.WriteLine("RiotApiKey: " + RiotApi.Key);
         }
     }
 }
