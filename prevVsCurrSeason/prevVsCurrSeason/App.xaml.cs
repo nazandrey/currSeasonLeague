@@ -5,6 +5,8 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Diagnostics;
+
 
 namespace prevVsCurrSeason
 {
@@ -13,6 +15,9 @@ namespace prevVsCurrSeason
     /// </summary>
     public partial class App : Application
     {
-       
+        public App() {
+            Debug.WriteLine("App");
+
+        }
     }
 }
