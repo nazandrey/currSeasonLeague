@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using System.Configuration;
 using System.Diagnostics;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace prevVsCurrSeason
 {
@@ -24,17 +26,32 @@ namespace prevVsCurrSeason
             }
         }
 
-        public static async Task<string> getPlayerIdByName(string region, string summonerNames)
+        public static async Task<string> getPlayerIdByName(string region, string summonerName)
         {
-            Task<string> responseString;
-
+            string playerId;
             using (var client = new HttpClient())
             {
-                responseString = client.GetStringAsync(RIOT_API_SERVER + String.Format("/api/lol/{{0}}/v1.4/summoner/by-name/{{1}}",
+                string response;
+                try
+                {
+                    response = await client.GetStringAsync(RIOT_API_SERVER + String.Format("/api/lol/{0}/v1.4/summoner/by-name/{1}",
                     region,
-                    summonerNames) + "?api_key=" + RIOT_API_KEY);
-                Debug.WriteLine("");
+                    summonerName) + "?api_key=" + RIOT_API_KEY);
+                }
+                catch (HttpRequestException)
+                {
+                    
+                    throw;
+                }
+                
+                JObject responseObj = JObject.Parse(response);
+                //result = responseString.ToString();
+                //int playerId = responseObj[summonerNames].id;
+                playerId = responseObj[summonerName.ToLower()]["id"].ToString();
+                Debug.WriteLine("playerId 2: " + playerId);
 
+
+                //{ "zendwel":{ "id":63750171,"name":"Zendwel","profileIconId":774,"summonerLevel":30,"revisionDate":1463605795000} };
                 /*
                     {"zendwel": {
                        "id": 63750171,
@@ -47,9 +64,9 @@ namespace prevVsCurrSeason
                 */
 
                 // /api/lol/{region}/v1.4/summoner/by-name/{summonerNames}
+                
             }
-
-            return responseString;
+            return playerId;
         }
 
         public static string Key { get { return RIOT_API_KEY; }}

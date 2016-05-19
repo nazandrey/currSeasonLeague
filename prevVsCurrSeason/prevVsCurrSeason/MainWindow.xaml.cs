@@ -26,7 +26,22 @@ namespace prevVsCurrSeason
             InitializeComponent();
             Debug.WriteLine("RiotApiKey: " + RiotApi.Key);
             Debug.WriteLine("RiotApiKey: " + RiotApi.Server);
-            RiotApi.getPlayerIdByName("euw","Zendwel");
+            Task<string> playerIdTask = RiotApi.getPlayerIdByName("euw","Zendwel");
+            try
+            {
+                playerIdTask.Wait(1000);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
+            Debug.Write("show player id: " + playerIdTask.Result);
+        }
+
+        public void showPlayerId(string playerId) {
+            
         }
     }
 }
