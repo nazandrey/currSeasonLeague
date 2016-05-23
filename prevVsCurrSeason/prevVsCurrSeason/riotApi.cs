@@ -16,6 +16,25 @@ namespace prevVsCurrSeason
         private static readonly string RIOT_API_KEY = ConfigurationManager.AppSettings["RiotApiKey"];
         private static readonly string RIOT_API_SERVER = ConfigurationManager.AppSettings["RiotApiServer"];
 
+        private static async Task<JObject> httpQuery(string query, string[] argList) {
+            using (var client = new HttpClient())
+            {
+                string response;
+                try
+                {
+                    response = await client.GetStringAsync(RIOT_API_SERVER + String.Format("/api/lol/" + query, argList) + "?api_key=" + RIOT_API_KEY);
+                }
+                catch (HttpRequestException)
+                {
+
+                    throw;
+                }
+
+                JObject responseObj = JObject.Parse(response);
+                return responseObj;
+            }
+        } 
+
         public static void getLeague(string region, string summonerIds) {
             using (var client = new HttpClient())
             {
