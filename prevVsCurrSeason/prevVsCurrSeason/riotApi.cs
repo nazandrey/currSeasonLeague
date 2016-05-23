@@ -28,7 +28,7 @@ namespace prevVsCurrSeason
 
         public static async Task<string> getPlayerIdByName(string region, string summonerName)
         {
-            string playerId;
+
             using (var client = new HttpClient())
             {
                 string response;
@@ -47,8 +47,7 @@ namespace prevVsCurrSeason
                 JObject responseObj = JObject.Parse(response);
                 //result = responseString.ToString();
                 //int playerId = responseObj[summonerNames].id;
-                playerId = responseObj[summonerName.ToLower()]["id"].ToString();
-                Debug.WriteLine("playerId 2: " + playerId);
+                string playerId = responseObj[summonerName.ToLower()]["id"].ToString();
 
 
                 //{ "zendwel":{ "id":63750171,"name":"Zendwel","profileIconId":774,"summonerLevel":30,"revisionDate":1463605795000} };
@@ -64,9 +63,9 @@ namespace prevVsCurrSeason
                 */
 
                 // /api/lol/{region}/v1.4/summoner/by-name/{summonerNames}
-                
+                return playerId;
+
             }
-            return playerId;
         }
 
         public static string Key { get { return RIOT_API_KEY; }}

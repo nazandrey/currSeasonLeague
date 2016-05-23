@@ -24,24 +24,13 @@ namespace prevVsCurrSeason
         public MainWindow()
         {
             InitializeComponent();
-            Debug.WriteLine("RiotApiKey: " + RiotApi.Key);
-            Debug.WriteLine("RiotApiKey: " + RiotApi.Server);
-            Task<string> playerIdTask = RiotApi.getPlayerIdByName("euw","Zendwel");
-            try
-            {
-                playerIdTask.Wait(1000);
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-            
-            Debug.Write("show player id: " + playerIdTask.Result);
+            RiotApi.getPlayerIdByName("euw","Zendwel").ContinueWith(task => {
+                showPlayerId(task.Result);
+            });          
         }
 
         public void showPlayerId(string playerId) {
-            
+            Debug.Write("show player id: " + playerId);
         }
     }
 }
