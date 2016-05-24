@@ -41,50 +41,26 @@ namespace prevVsCurrSeason
                 var responseString = client.GetStringAsync(RIOT_API_SERVER + String.Format("/api/lol/{{0}}/v2.5/league/by-summoner/{{1}}",
                     region,
                     summonerIds));
-                // /api/lol/{region}/v1.4/summoner/by-name/{summonerNames}
             }
         }
 
         public static async Task<string> getPlayerIdByName(string region, string summonerName)
         {
+            string playerId = null;
+            await httpQuery("{0}/v1.4/summoner/by-name/{1}", new string[] { region, summonerName }).ContinueWith(task => {
+                playerId = task.Result[summonerName.ToLower()]["id"].ToString();
+            });
+            return playerId; 
 
-            using (var client = new HttpClient())
-            {
-                string response;
-                try
-                {
-                    response = await client.GetStringAsync(RIOT_API_SERVER + String.Format("/api/lol/{0}/v1.4/summoner/by-name/{1}",
-                    region,
-                    summonerName) + "?api_key=" + RIOT_API_KEY);
-                }
-                catch (HttpRequestException)
-                {
-                    
-                    throw;
-                }
-                
-                JObject responseObj = JObject.Parse(response);
-                //result = responseString.ToString();
-                //int playerId = responseObj[summonerNames].id;
-                string playerId = responseObj[summonerName.ToLower()]["id"].ToString();
-
-
-                //{ "zendwel":{ "id":63750171,"name":"Zendwel","profileIconId":774,"summonerLevel":30,"revisionDate":1463605795000} };
-                /*
-                    {"zendwel": {
-                       "id": 63750171,
-                       "name": "Zendwel",
-                       "profileIconId": 774,
-                       "revisionDate": 1459627884000,
-                       "summonerLevel": 30
-                    }}
-            
-                */
-
-                // /api/lol/{region}/v1.4/summoner/by-name/{summonerNames}
-                return playerId;
-
-            }
+            /*
+                {"zendwel": {
+                    "id": 63750171,
+                    "name": "Zendwel",
+                    "profileIconId": 774,
+                    "revisionDate": 1459627884000,
+                    "summonerLevel": 30
+                }}            
+            */
         }
 
         public static string Key { get { return RIOT_API_KEY; }}
