@@ -22,7 +22,7 @@ namespace prevVsCurrSeason
                 string response;
                 try
                 {
-                    response = await client.GetStringAsync(RIOT_API_SERVER + String.Format("/api/lol/" + query, argList) + "?api_key=" + RIOT_API_KEY);
+                    response = await client.GetStringAsync(RIOT_API_SERVER + String.Format(query, argList) + "?api_key=" + RIOT_API_KEY);
                 }
                 catch (HttpRequestException)
                 {
@@ -33,15 +33,17 @@ namespace prevVsCurrSeason
                 JObject responseObj = JObject.Parse(response);
                 return responseObj;
             }
-        } 
+        }
 
-        public static void getLeague(string region, string summonerIds) {
-            using (var client = new HttpClient())
-            {
-                var responseString = client.GetStringAsync(RIOT_API_SERVER + String.Format("/api/lol/{{0}}/v2.5/league/by-summoner/{{1}}",
-                    region,
-                    summonerIds));
-            }
+        public static async Task<string> getLeague(string region, string summonerIds) {
+            string league = null;
+            await httpQuery("/api/lol/{0}/v2.5/league/by-summoner/{1}/entry", new string[] { region, summonerIds }).ContinueWith(task => {
+                JToken leagueInfo = task.Result[summonerIds].First();
+                string tier = leagueInfo["tier"].ToString();
+                string division = leagueInfo["entries"]?.Where(summonerLeagueInfo => summonerLeagueInfo["playerOrTeamId"].ToString() == summonerIds).First()["division"].ToString();
+                league = tier + " " + division;
+            });
+            return league;
         }
 
         public static async Task<string> getPlayerIdByName(string region, string summonerName)
@@ -50,7 +52,7 @@ namespace prevVsCurrSeason
             await httpQuery("{0}/v1.4/summoner/by-name/{1}", new string[] { region, summonerName }).ContinueWith(task => {
                 playerId = task.Result[summonerName.ToLower()]["id"].ToString();
             });
-            return playerId; 
+            return playerId;
 
             /*
                 {"zendwel": {
