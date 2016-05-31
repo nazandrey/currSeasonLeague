@@ -24,13 +24,16 @@ namespace prevVsCurrSeason
         public MainWindow()
         {
             InitializeComponent();
-            RiotApi.getPlayerIdByName("euw","Zendwel").ContinueWith(task => {
+            RiotApi.getSummonerIdByName("euw","Zendwel,Gllebo").ContinueWith(task => {
                 showPlayerId(task.Result);
-            });          
+            });
         }
 
-        public void showPlayerId(string playerId) {
-            Debug.Write("show player id: " + playerId);
+        public void showPlayerId(Dictionary<string,string> summonerNameIdList) {
+            foreach (KeyValuePair<string, string> summonerNameId in summonerNameIdList)
+            {
+                Debug.WriteLine("show summoner " + summonerNameId.Key + " id: " + summonerNameId.Value);
+            }
         }
     }
 }

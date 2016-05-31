@@ -46,13 +46,20 @@ namespace prevVsCurrSeason
             return league;
         }
 
-        public static async Task<string> getPlayerIdByName(string region, string summonerName)
+        public static async Task<Dictionary<string, string>> getSummonerIdByName(string region, string summonerNameListStr)
         {
-            string playerId = null;
-            await httpQuery("{0}/v1.4/summoner/by-name/{1}", new string[] { region, summonerName }).ContinueWith(task => {
-                playerId = task.Result[summonerName.ToLower()]["id"].ToString();
+            Dictionary<string, string> summonerIdList = new Dictionary<string, string>();
+            await httpQuery("/api/lol/{0}/v1.4/summoner/by-name/{1}", new string[] { region, summonerNameListStr }).ContinueWith(task => {
+                List<string> summonerNameList = summonerNameListStr.Split(',').ToList<string>();
+
+                summonerNameList.ForEach(summonerName => {
+                    var summonerInfo = task.Result[summonerName.ToLower()];
+                    var summonerId = summonerInfo["id"];
+                    string summonerIdStr = summonerId.ToString();
+                    summonerIdList.Add(summonerName, task.Result[summonerName.ToLower()]["id"].ToString());
+                });
             });
-            return playerId;
+            return summonerIdList; 
 
             /*
                 {"zendwel": {
