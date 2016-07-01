@@ -34,25 +34,6 @@ namespace prevVsCurrSeason
                 return responseObj;
             }
         }
-
-        public static async Task<Dictionary<string, string>> getCurrSeasonLeague(string region, string summonerIdListStr)
-        {
-            Dictionary<string, string> leagueList = new Dictionary<string, string>();
-            await getLeague(region, summonerIdListStr).ContinueWith(task => {
-                leagueList = task.Result;
-            });
-            return leagueList;
-        }
-
-        public static async Task<Dictionary<string, string>> getPrevSeasonLeague(string region, string summonerIdListStr)
-        {
-            Dictionary<string, string> leagueList = new Dictionary<string, string>();
-            await getLeague(region, summonerIdListStr, true).ContinueWith(task => {
-                leagueList = task.Result;
-            });
-            return leagueList;
-        }
-
         private static async Task<Dictionary<string, string>> getLeague(string region, string summonerIdListStr, bool isPrevSeason = false)
         {
             Dictionary<string, string> leagueList = new Dictionary<string, string>();
@@ -78,6 +59,24 @@ namespace prevVsCurrSeason
             });
             return leagueList;
         }
+
+        public static async Task<Dictionary<string, string>> getCurrSeasonLeague(string region, string summonerIdListStr)
+        {
+            Dictionary<string, string> leagueList = new Dictionary<string, string>();
+            await getLeague(region, summonerIdListStr).ContinueWith(task => {
+                leagueList = task.Result;
+            });
+            return leagueList;
+        }
+
+        public static async Task<Dictionary<string, string>> getPrevSeasonLeague(string region, string summonerIdListStr)
+        {
+            Dictionary<string, string> leagueList = new Dictionary<string, string>();
+            await getLeague(region, summonerIdListStr, true).ContinueWith(task => {
+                leagueList = task.Result;
+            });
+            return leagueList;
+        }        
 
         public static async Task<Dictionary<string, string>> getSummonerIdByName(string region, string summonerNameListStr)
         {
