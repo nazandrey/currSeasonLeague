@@ -24,8 +24,11 @@ namespace prevVsCurrSeason
         public MainWindow()
         {
             InitializeComponent();
-            RiotApi.getSummonerIdByName("euw","Zendwel,Gllebo").ContinueWith(task => {
-                showPlayerId(task.Result);
+            RiotApi.getSummonerIdByName("euw","Zendwel,Gllebo").ContinueWith(summonerIdListTask => {
+                showPlayerId(summonerIdListTask.Result);
+                RiotApi.getCurrSeasonLeague("euw", String.Join(",", summonerIdListTask.Result.Values.ToArray<string>())).ContinueWith(leagueTask => {
+                    showLeagueList(leagueTask.Result);
+                });
             });
         }
 
@@ -33,6 +36,14 @@ namespace prevVsCurrSeason
             foreach (KeyValuePair<string, string> summonerNameId in summonerNameIdList)
             {
                 Debug.WriteLine("show summoner " + summonerNameId.Key + " id: " + summonerNameId.Value);
+            }
+        }
+
+        public void showLeagueList(Dictionary<string, string> summonerLeagueList)
+        {
+            foreach (KeyValuePair<string, string> summonerLeague in summonerLeagueList)
+            {
+                Debug.WriteLine("show league " + summonerLeague.Key + " id: " + summonerLeague.Value);
             }
         }
     }

@@ -35,15 +35,28 @@ namespace prevVsCurrSeason
             }
         }
 
-        public static async Task<string> getLeague(string region, string summonerIds) {
-            string league = null;
-            await httpQuery("/api/lol/{0}/v2.5/league/by-summoner/{1}/entry", new string[] { region, summonerIds }).ContinueWith(task => {
-                JToken leagueInfo = task.Result[summonerIds].First();
-                string tier = leagueInfo["tier"].ToString();
-                string division = leagueInfo["entries"]?.Where(summonerLeagueInfo => summonerLeagueInfo["playerOrTeamId"].ToString() == summonerIds).First()["division"].ToString();
-                league = tier + " " + division;
+        public static async Task<Dictionary<string, string>> getCurrSeasonLeague(string region, string summonerIdListStr) {
+            Dictionary<string, string> leagueList = new Dictionary<string, string>();
+            await httpQuery("/api/lol/{0}/v2.5/league/by-summoner/{1}/entry", new string[] { region, summonerIdListStr }).ContinueWith(task => {
+                List<string> summonerIdList = summonerIdListStr.Split(',').ToList<string>();
+
+                summonerIdList.ForEach(summonerId => {
+                    JToken leagueInfo = task.Result?[summonerId]?.First();
+                    string tier = "";
+                    string division = "";
+
+                    if (leagueInfo != null)
+                    {
+                        tier = leagueInfo["tier"].ToString();
+                        division = leagueInfo["entries"]?.Where(summonerLeagueInfo => summonerLeagueInfo["playerOrTeamId"].ToString() == summonerId).First()["division"].ToString();
+                    } else {
+                        tier = "UNRANKED";
+                    }
+                    leagueList.Add(summonerId, tier + (division != "" ? (" " + division) : ""));
+                });
+
             });
-            return league;
+            return leagueList;
         }
 
         public static async Task<Dictionary<string, string>> getSummonerIdByName(string region, string summonerNameListStr)
