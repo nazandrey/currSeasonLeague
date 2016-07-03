@@ -44,7 +44,7 @@ namespace prevVsCurrSeason
             foreach (KeyValuePair<string, string> summonerLeague in summonerLeagueList)
             {
                 string summonerName = summonerIdList.FirstOrDefault(summonerIdEntry => summonerIdEntry.Value == summonerLeague.Key).Key;
-                Debug.WriteLine("show summoner" + (summonerName ?? summonerLeague.Key) + "league: " + summonerLeague.Value);
+                Debug.WriteLine("show summoner " + (summonerName ?? summonerLeague.Key) + " league: " + summonerLeague.Value);
             }
         }
     }
