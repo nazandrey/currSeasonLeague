@@ -7,6 +7,15 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        
+        <ListBox x:Name="listBox" HorizontalAlignment="Left" Height="100" Margin="407,10,0,0" VerticalAlignment="Top" Width="100"/>
+        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="10,236,0,0" VerticalAlignment="Top" Width="497" Height="74"/>
+        <DataGrid x:Name="dataGrid" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="221" Width="392" SelectionChanged="dataGrid_SelectionChanged">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Summoner's Name"/>
+                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Prev Rank"/>
+                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Curr Rank"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
     </Grid>
 </Window>
