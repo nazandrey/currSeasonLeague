@@ -27,7 +27,7 @@ namespace prevVsCurrSeason
             RiotApi.getSummonerIdByName("euw","Zendwel,Gllebo").ContinueWith(summonerIdListTask => {
                 showPlayerId(summonerIdListTask.Result);
                 RiotApi.getCurrSeasonLeague("euw", String.Join(",", summonerIdListTask.Result.Values.ToArray<string>())).ContinueWith(leagueTask => {
-                    showLeagueList(leagueTask.Result);
+                    showLeagueList(leagueTask.Result, summonerIdListTask.Result);
                 });
             });
         }
@@ -39,11 +39,12 @@ namespace prevVsCurrSeason
             }
         }
 
-        public void showLeagueList(Dictionary<string, string> summonerLeagueList)
+        public void showLeagueList(Dictionary<string, string> summonerLeagueList, Dictionary<string, string> summonerIdList)
         {
             foreach (KeyValuePair<string, string> summonerLeague in summonerLeagueList)
             {
-                Debug.WriteLine("show league " + summonerLeague.Key + " id: " + summonerLeague.Value);
+                string summonerName = summonerIdList.FirstOrDefault(summonerIdEntry => summonerIdEntry.Value == summonerLeague.Key).Key;
+                Debug.WriteLine("show summoner" + (summonerName ?? summonerLeague.Key) + "league: " + summonerLeague.Value);
             }
         }
     }
