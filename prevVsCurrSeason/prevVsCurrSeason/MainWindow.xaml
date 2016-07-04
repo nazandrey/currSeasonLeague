@@ -8,12 +8,16 @@
         Title="MainWindow" Height="350" Width="525">
     <Grid>
         <ListBox x:Name="listBox" HorizontalAlignment="Left" Height="100" Margin="407,10,0,0" VerticalAlignment="Top" Width="100"/>
-        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="10,236,0,0" VerticalAlignment="Top" Width="497" Height="74"/>
-        <DataGrid x:Name="dataGrid" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="221" Width="392">
+        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="10,236,0,0" VerticalAlignment="Top" Width="497" Height="74" Click="button_Click"/>
+        <DataGrid x:Name="summonerLeagueDataGrid" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="221" Width="392" FrozenColumnCount="2" AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True" IsManipulationEnabled="True">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Summoner's Name"/>
-                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Curr Rank"/>
+                <DataGridTextColumn Header="Summoner's Name" CanUserResize="False" CanUserReorder="False"/>
+                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Curr Rank" CanUserReorder="False" CanUserResize="False" IsReadOnly="True"/>
             </DataGrid.Columns>
+            <Button/>
+            <Button/>
+            <Button/>
+            <Button/>
         </DataGrid>
 
     </Grid>
