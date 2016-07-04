@@ -26,7 +26,7 @@ namespace prevVsCurrSeason
             InitializeComponent();
             RiotApi.getSummonerIdByName("euw","Zendwel,Gllebo").ContinueWith(summonerIdListTask => {
                 showPlayerId(summonerIdListTask.Result);
-                RiotApi.getCurrSeasonLeague("euw", String.Join(",", summonerIdListTask.Result.Values.ToArray<string>())).ContinueWith(leagueTask => {
+                RiotApi.getLeague("euw", String.Join(",", summonerIdListTask.Result.Values.ToArray<string>())).ContinueWith(leagueTask => {
                     showLeagueList(leagueTask.Result, summonerIdListTask.Result);
                 });
             });

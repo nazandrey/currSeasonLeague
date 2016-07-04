@@ -12,7 +12,6 @@
         <DataGrid x:Name="dataGrid" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="221" Width="392">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Summoner's Name"/>
-                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Prev Rank"/>
                 <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Curr Rank"/>
             </DataGrid.Columns>
         </DataGrid>
