@@ -34,7 +34,8 @@ namespace prevVsCurrSeason
                 return responseObj;
             }
         }
-        private static async Task<Dictionary<string, string>> getLeague(string region, string summonerIdListStr, bool isPrevSeason = false)
+
+        public static async Task<Dictionary<string, string>> getLeague(string region, string summonerIdListStr)
         {
             Dictionary<string, string> leagueList = new Dictionary<string, string>();
             await httpQuery("/api/lol/{0}/v2.5/league/by-summoner/{1}/entry", new string[] { region, summonerIdListStr }).ContinueWith(task => {
@@ -58,25 +59,7 @@ namespace prevVsCurrSeason
                 });
             });
             return leagueList;
-        }
-
-        public static async Task<Dictionary<string, string>> getCurrSeasonLeague(string region, string summonerIdListStr)
-        {
-            Dictionary<string, string> leagueList = new Dictionary<string, string>();
-            await getLeague(region, summonerIdListStr).ContinueWith(task => {
-                leagueList = task.Result;
-            });
-            return leagueList;
-        }
-
-        public static async Task<Dictionary<string, string>> getPrevSeasonLeague(string region, string summonerIdListStr)
-        {
-            Dictionary<string, string> leagueList = new Dictionary<string, string>();
-            await getLeague(region, summonerIdListStr, true).ContinueWith(task => {
-                leagueList = task.Result;
-            });
-            return leagueList;
-        }        
+        }      
 
         public static async Task<Dictionary<string, string>> getSummonerIdByName(string region, string summonerNameListStr)
         {
