@@ -55,6 +55,25 @@ namespace prevVsCurrSeason
                 Debug.WriteLine("show summoner " + (summonerName ?? summonerLeague.Key) + " league: " + summonerLeague.Value);
                 _summonerLeagueList.Add(new SummonerLeague() { Name = (summonerName ?? summonerLeague.Key), League = summonerLeague.Value });
             }
+        }        
+
+        private void addSummonerBtn_Click(object sender, RoutedEventArgs e)
+        {
+            SummonerLeague summonerLeague = new SummonerLeague() { Name = summonerNameTextBox.Text, League = ""};
+            summonerNameTextBox.Text = "";
+            _summonerLeagueList.Add(summonerLeague);
+        }
+
+        private void showCurrLeagueBtn_Click(object sender, RoutedEventArgs e)
+        {
+            string[] summonerNameList = _summonerLeagueList.Select(summonerLeague => summonerLeague.Name).ToArray<string>();
+
+            RiotApi.getSummonerIdByName("euw", String.Join(",", summonerNameList)).ContinueWith(summonerIdListTask => {
+                showPlayerId(summonerIdListTask.Result);
+                RiotApi.getLeague("euw", String.Join(",", summonerIdListTask.Result.Values.ToArray<string>())).ContinueWith(leagueTask => {
+                    showLeagueList(leagueTask.Result, summonerIdListTask.Result);
+                }, TaskScheduler.FromCurrentSynchronizationContext());
+            }, TaskScheduler.FromCurrentSynchronizationContext());
         }
     }
 }
