@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,12 +25,18 @@ namespace prevVsCurrSeason
         public MainWindow()
         {
             InitializeComponent();
-            RiotApi.getSummonerIdByName("euw","Zendwel,Gllebo").ContinueWith(summonerIdListTask => {
-                showPlayerId(summonerIdListTask.Result);
-                RiotApi.getLeague("euw", String.Join(",", summonerIdListTask.Result.Values.ToArray<string>())).ContinueWith(leagueTask => {
-                    showLeagueList(leagueTask.Result, summonerIdListTask.Result);
-                });
-            });
+            this.DataContext = this;
+        }
+
+        private ObservableCollection<SummonerLeague> _summonerLeagueList;
+        public ObservableCollection<SummonerLeague> SummonerLeagueList
+        {
+            get
+            {
+                if (_summonerLeagueList == null)
+                    _summonerLeagueList = new ObservableCollection<SummonerLeague>();
+                return _summonerLeagueList;
+            }
         }
 
         public void showPlayerId(Dictionary<string,string> summonerNameIdList) {
@@ -39,12 +46,14 @@ namespace prevVsCurrSeason
             }
         }
 
-        public void showLeagueList(Dictionary<string, string> summonerLeagueList, Dictionary<string, string> summonerIdList)
+        public void showLeagueList(Dictionary<string, string> summonerLeagueUiList, Dictionary<string, string> summonerIdList)
         {
-            foreach (KeyValuePair<string, string> summonerLeague in summonerLeagueList)
+            _summonerLeagueList.Clear();
+            foreach (KeyValuePair<string, string> summonerLeague in summonerLeagueUiList)
             {
                 string summonerName = summonerIdList.FirstOrDefault(summonerIdEntry => summonerIdEntry.Value == summonerLeague.Key).Key;
                 Debug.WriteLine("show summoner " + (summonerName ?? summonerLeague.Key) + " league: " + summonerLeague.Value);
+                _summonerLeagueList.Add(new SummonerLeague() { Name = (summonerName ?? summonerLeague.Key), League = summonerLeague.Value });
             }
         }
     }
