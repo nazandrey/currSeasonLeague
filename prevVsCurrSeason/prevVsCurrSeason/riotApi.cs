@@ -68,10 +68,11 @@ namespace prevVsCurrSeason
                 List<string> summonerNameList = summonerNameListStr.Split(',').ToList<string>();
 
                 summonerNameList.ForEach(summonerName => {
-                    var summonerInfo = task.Result[summonerName.ToLower()];
+                    string summonerResponseName = summonerName.ToLower().Replace(" ", "");
+                    var summonerInfo = task.Result[summonerResponseName];
                     var summonerId = summonerInfo["id"];
                     string summonerIdStr = summonerId.ToString();
-                    summonerIdList.Add(summonerName, task.Result[summonerName.ToLower()]["id"].ToString());
+                    summonerIdList.Add(summonerName, task.Result[summonerResponseName]["id"].ToString());
                 });
             });
             return summonerIdList; 
