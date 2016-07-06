@@ -76,16 +76,6 @@ namespace prevVsCurrSeason
                 });
             });
             return summonerIdList; 
-
-            /*
-                {"zendwel": {
-                    "id": 63750171,
-                    "name": "Zendwel",
-                    "profileIconId": 774,
-                    "revisionDate": 1459627884000,
-                    "summonerLevel": 30
-                }}            
-            */
         }
 
         public static string Key { get { return RIOT_API_KEY; }}
