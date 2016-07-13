@@ -7,8 +7,8 @@
     <ProjectGuid>{7DE814CA-01F1-4365-856D-388FDE2E0030}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>prevVsCurrSeason</RootNamespace>
-    <AssemblyName>prevVsCurrSeason</AssemblyName>
+    <RootNamespace>currSeasonLeague</RootNamespace>
+    <AssemblyName>currSeasonLeague</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>

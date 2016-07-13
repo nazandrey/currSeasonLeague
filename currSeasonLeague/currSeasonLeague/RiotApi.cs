@@ -9,7 +9,7 @@ using System.Diagnostics;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace prevVsCurrSeason
+namespace currSeasonLeague
 {
     static class RiotApi
     {

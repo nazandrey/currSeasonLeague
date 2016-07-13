@@ -15,7 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Diagnostics;
 
-namespace prevVsCurrSeason
+namespace currSeasonLeague
 {
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml

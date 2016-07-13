@@ -8,7 +8,7 @@ using System.Windows;
 using System.Diagnostics;
 
 
-namespace prevVsCurrSeason
+namespace currSeasonLeague
 {
     /// <summary>
     /// Логика взаимодействия для App.xaml

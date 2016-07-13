@@ -1,0 +1,22 @@
+﻿<Window x:Class="currSeasonLeague.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:currSeasonLeague"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="417.994" Width="525">
+    <Grid>
+        <ListBox x:Name="listBox" HorizontalAlignment="Left" Height="34" Margin="91,264,0,0" VerticalAlignment="Top" Width="40"/>
+        <Button x:Name="showCurrLeagueBtn" Content="Show Curr League" HorizontalAlignment="Left" Margin="10,303,0,0" VerticalAlignment="Top" Width="497" Height="74" Click="showCurrLeagueBtn_Click"/>
+        <DataGrid x:Name="summonerLeagueDataGrid" ItemsSource="{Binding SummonerLeagueList}" HorizontalAlignment="Left" Margin="10,88,0,0" VerticalAlignment="Top" Height="171" Width="497" FrozenColumnCount="2" AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True" IsManipulationEnabled="True" CanUserResizeRows="False" CanUserAddRows="False" CanUserDeleteRows="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Summoner's Name" Binding="{Binding Path=Name}" CanUserResize="False" CanUserReorder="False"/>
+                <DataGridTextColumn Header="Curr Rank" Binding="{Binding Path=League}" CanUserReorder="False" CanUserResize="False" IsReadOnly="True"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <TextBox x:Name="summonerNameTextBox" HorizontalAlignment="Left" Height="34" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="497" ToolTip="Type summoner's name here and click button to add it to list"/>
+        <Button x:Name="addSummonerBtn" Content="Add Summoner" HorizontalAlignment="Left" Margin="10,49,0,0" VerticalAlignment="Top" Width="497" Height="34" Click="addSummonerBtn_Click" />
+        <Label x:Name="Server" Content="Server" HorizontalAlignment="Left" Margin="10,272,0,0" VerticalAlignment="Top" Width="76"/>
+    </Grid>
+</Window>

@@ -1,7 +1,7 @@
-﻿<Application x:Class="prevVsCurrSeason.App"
+﻿<Application x:Class="currSeasonLeague.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:prevVsCurrSeason"
+             xmlns:local="clr-namespace:currSeasonLeague"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
     </Application.Resources>

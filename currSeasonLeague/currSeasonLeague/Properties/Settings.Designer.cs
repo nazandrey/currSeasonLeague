@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace prevVsCurrSeason.Properties
+namespace currSeasonLeague.Properties
 {
 
 
