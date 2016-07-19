@@ -68,9 +68,9 @@ namespace currSeasonLeague
         {
             string[] summonerNameList = _summonerLeagueList.Select(summonerLeague => summonerLeague.Name).ToArray<string>();
 
-            RiotApi.getSummonerIdByName("euw", String.Join(",", summonerNameList)).ContinueWith(summonerIdListTask => {
+            RiotApi.QueryService.getSummonerIdByName("euw", String.Join(",", summonerNameList)).ContinueWith(summonerIdListTask => {
                 showPlayerId(summonerIdListTask.Result);
-                RiotApi.getLeague("euw", String.Join(",", summonerIdListTask.Result.Values.ToArray<string>())).ContinueWith(leagueTask => {
+                RiotApi.QueryService.getLeague("euw", String.Join(",", summonerIdListTask.Result.Values.ToArray<string>())).ContinueWith(leagueTask => {
                     showLeagueList(leagueTask.Result, summonerIdListTask.Result);
                 }, TaskScheduler.FromCurrentSynchronizationContext());
             }, TaskScheduler.FromCurrentSynchronizationContext());
