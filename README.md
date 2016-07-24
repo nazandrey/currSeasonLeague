@@ -8,5 +8,6 @@ Showing league of players which you have typed on UI.
 
 ### How do I get set up? ###
 
+1. git clone [this](https://bitbucket.org/NazarovAndrey/riotapi) to your project folder (these 2 projects should be in the same level)
 1. Open file currSeasonLeague\currSeasonLeague\App.config
 1. Replace "$DEV_KEY$" with your api key.
