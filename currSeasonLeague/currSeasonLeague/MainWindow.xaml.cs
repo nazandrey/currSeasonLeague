@@ -70,6 +70,11 @@ namespace currSeasonLeague
 
         private void showCurrLeagueBtn_Click(object sender, RoutedEventArgs e)
         {
+            if (region == null) {
+                MessageBox.Show("Choose your region!");
+                return;
+            }
+
             string[] summonerNameList = _summonerLeagueList.Select(summonerLeague => summonerLeague.Name).ToArray<string>();
 
             RiotApi.QueryService.getSummonerIdByName(region, String.Join(",", summonerNameList)).ContinueWith(summonerIdListTask => {
