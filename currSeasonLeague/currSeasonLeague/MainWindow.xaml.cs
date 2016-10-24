@@ -22,9 +22,13 @@ namespace currSeasonLeague
     /// </summary>
     public partial class MainWindow : Window
     {
+        public string region = null;
+
         public MainWindow()
         {
             InitializeComponent();
+            serverComboBox.SelectedIndex = 0;
+            region = (serverComboBox.SelectedItem as ComboBoxItem).Content.ToString();
             this.DataContext = this;
         }
 
@@ -55,7 +59,7 @@ namespace currSeasonLeague
                 Debug.WriteLine("show summoner " + (summonerName ?? summonerLeague.Key) + " league: " + summonerLeague.Value);
                 _summonerLeagueList.Add(new SummonerLeague() { Name = (summonerName ?? summonerLeague.Key), League = summonerLeague.Value });
             }
-        }        
+        }
 
         private void addSummonerBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -68,9 +72,9 @@ namespace currSeasonLeague
         {
             string[] summonerNameList = _summonerLeagueList.Select(summonerLeague => summonerLeague.Name).ToArray<string>();
 
-            RiotApi.QueryService.getSummonerIdByName("euw", String.Join(",", summonerNameList)).ContinueWith(summonerIdListTask => {
+            RiotApi.QueryService.getSummonerIdByName(region, String.Join(",", summonerNameList)).ContinueWith(summonerIdListTask => {
                 showPlayerId(summonerIdListTask.Result);
-                RiotApi.QueryService.getLeague("euw", String.Join(",", summonerIdListTask.Result.Values.ToArray<string>())).ContinueWith(leagueTask => {
+                RiotApi.QueryService.getLeague(region, String.Join(",", summonerIdListTask.Result.Values.ToArray<string>())).ContinueWith(leagueTask => {
                     showLeagueList(leagueTask.Result, summonerIdListTask.Result);
                 }, TaskScheduler.FromCurrentSynchronizationContext());
             }, TaskScheduler.FromCurrentSynchronizationContext());
